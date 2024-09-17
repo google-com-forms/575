@@ -38,7 +38,7 @@ function initSDK() {
             ysdk.adv.showFullscreenAdv({
                 callbacks: {
                     onClose: wasShown => {
-                        console.info('First close')
+                        console.info('First close');
                     }
                 }
             });
@@ -46,11 +46,19 @@ function initSDK() {
         .then(() => {
             gameLangTld = ysdk.environment.i18n.tld;
             gameLang = ysdk.environment.i18n.lang;
+            
+            // Varsayılan dili EN olarak ayarlıyoruz
+            if (gameLang !== 'en') {
+                gameLang = 'en';  // gameLang'i İngilizce yap
+            }
+            if (gameLangTld !== 'en') {
+                gameLangTld = 'en';  // TLD'yi İngilizce yap
+            }
+
             console.log('!!!HTML: Lang.init');
             console.log(gameLangTld);
             console.log(gameLang);
             //changePolicyAndSupportText();
-
         })
         .then(() => {
             payload = ysdk.environment.payload;
@@ -61,13 +69,11 @@ function initSDK() {
             deviceType = ysdk.deviceInfo.type;
             console.log('!!!HTML: Device.info');
             console.log(deviceType);
-             //Показываем баннеры внизу страницы
+            //Показываем баннеры внизу страницы
             //showBannerBottomAds();
         });
+}
 
-
-
-};
 
 
 //Запрашиваем отзыв
