@@ -3,8 +3,8 @@
 
 
 let ysdk;
-let gameLangTld;
-let gameLang;
+let gameLangTld = "en";
+let gameLang = "en";
 let deviceType;
 let player;
 let payments;
