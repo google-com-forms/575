@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Drift and run away</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+
+
+
+  <script>
+    //Возврат фокуса на окно
+
+    window.addEventListener("touchstart", () => {
+      container.focus();
+      window.focus();
+      canvas.focus();
+      //console.log('!!!HTML: Click touch')
+    });
+
+    window.addEventListener("pointerdown", () => {
+      container.focus();
+      window.focus();
+      canvas.focus();
+      // console.log('!!!HTML: Pointer touch')
+    });
+
+    //при изменении размеров окна пересчитваем размер canvas
+    window.addEventListener("resize", () => {
+        // console.log('!!!HTML: Windows resize')
+        //changeCanvasSize();
+    });
+
+
+
+  </script>
+
+
+
+  <script>
+    //Текст для подвала    
+    function changePolicyAndSupportText() {
+
+      const text_suport = document.getElementById("text_suport");
+      const text_policy = document.getElementById("text_policy");
+      console.log('gameLang ' + gameLang);
+      if (gameLang == "en") {
+        text_suport.innerHTML = "Вопросы: xcreative@yandex.ru";
+        text_policy.innerHTML = "Политика конфиденциальности";
+      }
+      if (gameLang == "en") {
+        text_suport.innerHTML = "Support: xcreative@yandex.ru";
+        text_policy.innerHTML = "Privacy Policy";
+      }
+      if (gameLang == "en") {
+        text_suport.innerHTML = "Destek: xcreative@yandex.ru";
+        text_policy.innerHTML = "Gizlilik Politikası";
+      }
+
+    }
+  </script>
+
+<!-- Yandex.RTB -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script>
+
+</head>
+
+<body>
+
+  <script>
+    window.focus(); //возвращаем фокус на iframe после старта
+  </script>
+
+
+  <!-- Подгружаем YandexSDK_API  -->
+  <script type="text/javascript" src="TemplateData/yandex_api_sdk.js"></script>
+
+
+
+  <script>
+    //показываем рекламу при старте приложения
+    doShowAds();
+  </script>
+
+
+
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" width=432 height=768></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-mobile-warning">
+      <!--
+            WebGL builds are not supported on mobile devices.
+         -->
+    </div>
+    <!--
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Drift and run away</div>
+      </div>
+      -->
+  </div>
+
+  <script>
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/web_crazy_tachki.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/web_crazy_tachki.data.unityweb",
+      frameworkUrl: buildUrl + "/web_crazy_tachki.framework.js.unityweb",
+      codeUrl: buildUrl + "/web_crazy_tachki.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+      companyName: "XCreative Games",
+      productName: "Drift and run away",
+      productVersion: "1.0.0",
+    };
+
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+    var mobileWarning = document.querySelector("#unity-mobile-warning");
+
+    // By default Unity keeps WebGL canvas render target size matched with
+    // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+    // Set this to false if you want to decouple this synchronization from
+    // happening inside the engine, and you would instead like to size up
+    // the canvas DOM size and WebGL render target sizes yourself.
+    // config.matchWebGLToCanvasSize = false;
+
+    // if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    container.className = "unity-mobile";
+    // Avoid draining fillrate performance on mobile devices,
+    // and default/override low DPI mode on mobile browsers.
+    //  config.devicePixelRatio = 1;
+    //  mobileWarning.style.display = "block";
+    //  setTimeout(() => {
+    //    mobileWarning.style.display = "none";
+    //  }, 5000);
+    //} else {
+    //  canvas.style.width = "432px";
+    //  canvas.style.height = "768px";
+    //}
+    loadingBar.style.display = "block";
+
+    var unityGame; //This mine
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+
+        unityGame = unityInstance; //This mine
+        loadingBar.style.display = "none";
+
+        //fullscreenButton.onclick = () => {
+        //  unityInstance.SetFullscreen(1);
+        //};
+
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+
+
+
+  <!--
+  <div id="footer" class="unselectable" style="margin-left:30px; margin-bottom:5px">
+    <font size=-4 style="color:white">
+      <span id="text_suport">Вопросы: xcreative@yandex.ru</span> <a href="policy.html" target="_blank"
+        style="color:white"><span id="text_policy">Политика конфиденциальности</span>
+      </a>
+    </font>
+  </div>
+  -->
+
+<script>
+ 
+  
+  //Меняем размер Canvas под баннер
+  function changeCanvasSize(){
+
+    //Меняем background
+    document.body.style.background = "#7FCCF3";
+
+    var bannerHeight; //высота подложки для баннера
+
+    if (gameLang == "en") {
+        //tckb временно отключаем показ баннера для фичеринга       
+        bannerHeight = 0;
+        //bannerHeight = 100;
+    } else {
+        bannerHeight = 0;
+    }
+
+    var newWidth= 100; //в процентах
+    var newHeight=((window.innerHeight-bannerHeight)/window.innerHeight)*100;
+
+    document.getElementById("unity-canvas").style.width = newWidth +"%";
+    document.getElementById("unity-canvas").style.height = newHeight +"%";
+
+  }
+</script>
+
+
+<!-- Реклама в подвале -->
+
+<!-- Desktop Banner -->
+<!-- Yandex.RTB R-A-1369804-33 -->
+<div id="banner-bottom"></div>
+
+<script>
+    function showBannerBottomAds() {
+       
+       //временно отключаем показ баннера для фичеринга
+       //return;
+
+       //баннер только для русского показыаваем
+       if (gameLang == "en") {
+            
+           //Desktop Banner
+           if(deviceType === "desktop"){
+           console.log("!!!HTML: This is desktop ADS");
+           
+           //Перед показом баннера изменяем размер Canvas
+           //changeCanvasSize();
+           //Yandex.RTB R-A-1369804-33
+           window.yaContextCb.push(()=>{
+                Ya.Context.AdvManager.render({
+                renderTo: 'banner-bottom',
+                //blockId: 'R-A-1369804-33'
+                blockId: ''
+                
+                })
+           })
+        } 
+
+        //Мобильный обычный баннер
+        //он почему-то не завелся
+      /*  if(deviceType === "mobile"){
+            console.log("!!!HTML: This is mobile ADS");
+           //Перед показом баннера изменяем размер Canvas
+           changeCanvasSize();
+            //Yandex.RTB R-A-1369804-35
+            window.yaContextCb.push(()=>{
+              Ya.Context.AdvManager.render({
+                renderTo: 'banner-bottom',
+                blockId: 'R-A-1369804-35'
+              })
+            })
+        } 
+        */
+
+        //Мобильный плавающий внизу баннер
+          if(deviceType === "mobile"){
+            console.log("!!!HTML: This is mobile ADS");
+           //Перед показом баннера изменяем размер Canvas
+           //changeCanvasSize();
+            //Mobile Banner floorAd
+            window.yaContextCb.push(()=>{
+                  Ya.Context.AdvManager.render({
+                    type: 'floorAd',
+                    //blockId: 'R-A-1369804-34'
+                    blockId: ''
+                  })
+                })
+            } 
+
+         }
+
+    }
+</script>
+
+
+
+
+
+
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })
+      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(88689470 , "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true
+    });
+  </script>
+  <!-- /Yandex.Metrika counter -->
+
+
+</body>
+
+</html>
